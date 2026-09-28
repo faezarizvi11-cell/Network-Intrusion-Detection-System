@@ -3,7 +3,7 @@ let selectedSample = null;
 let benign = document.getElementById("benignSample");
 let dos = document.getElementById("dosSample");
 
-fetch("http://127.0.0.1:8000/demo-samples")
+fetch("https://network-intrusion-detection-system-3ev3.onrender.com/demo-samples")
     .then(response => response.json())
     .then(data => {
 
@@ -31,7 +31,6 @@ fetch("http://127.0.0.1:8000/demo-samples")
         });
 
 
-        // DoS Attack Traffic
         dos.addEventListener("click", function() {
 
             selectedSample = { ...data.samples[1] };
@@ -69,7 +68,7 @@ fetch("http://127.0.0.1:8000/demo-samples")
                 Object.keys(selectedSample).length
             );
 
-            fetch("http://127.0.0.1:8000/NetworkFlow", {
+            fetch("https://network-intrusion-detection-system-3ev3.onrender.com/NetworkFlow", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
