@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Network Intrusion Detection System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef6fc;
+            color: #173b70;
+        }
+
+        .heading {
+            background: #173b70;
+            color: white;
+            padding: 28px 40px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .security-icon {
+            font-size: 42px;
+        }
+
+        .heading h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .heading h3 {
+            margin: 7px 0 0;
+            font-size: 14px;
+            font-weight: normal;
+            color: #d9e9f8;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 18px rgba(23, 59, 112, 0.08);
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            margin: 0 0 8px;
+            font-size: 21px;
+        }
+
+        .description {
+            margin: 0 0 25px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .sample-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .sample-button {
+            border: 1px solid #c9e1f5;
+            background: #f7fbff;
+            border-radius: 10px;
+            padding: 22px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .sample-button:hover {
+            border-color: #3478c9;
+            background: #eef7ff;
+        }
+
+        .sample-button.selected {
+            border: 2px solid #3478c9;
+            background: #edf6ff;
+        }
+
+        .sample-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .sample-button h3 {
+            margin: 0 0 7px;
+            color: #173b70;
+        }
+
+        .sample-button p {
+            margin: 0;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .selected-sample {
+            margin-top: 22px;
+            padding: 14px 16px;
+            background: #f4f8fc;
+            border-radius: 8px;
+            border: 1px solid #d9e7f3;
+            font-size: 14px;
+        }
+
+        .selected-sample strong {
+            color: #173b70;
+        }
+
+        .check-button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #173b70;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .check-button:hover {
+            background: #24538f;
+        }
+
+        .check-button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        #predictionResult {
+            text-align: center;
+            padding: 32px 20px;
+            border: 1px solid #c9e1f5;
+            border-radius: 10px;
+            background: #f8fbfe;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #resultIcon {
+            font-size: 42px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        #predictionResult h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        #classification {
+            margin: 5px 0;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        #confidence {
+            margin: 8px 0 0;
+            font-size: 14px;
+        }
+
+        .result-title {
+            margin-bottom: 15px;
+        }
+
+        .result-title h2 {
+            margin: 0;
+        }
+
+        .result-title p {
+            margin: 6px 0 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .info-box {
+            background: #f7fbff;
+            border: 1px solid #d9e7f3;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .info-box span {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+            .heading {
+                padding: 22px;
+            }
+
+            .heading h1 {
+                font-size: 21px;
+            }
+
+            .container {
+                margin: 20px auto;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .sample-grid,
+            .info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="heading">
+
+        <div class="security-icon">
+            🛡️
+        </div>
+
+        <div>
+            <h1>Network Intrusion Detection System</h1>
+
+            <h3>
+                Detect potential network attacks using a trained machine learning model.
+            </h3>
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="card">
+
+            <h2>Test Network Traffic</h2>
+
+            <p class="description">
+                Select a real network-flow sample from the dataset and let the ML model classify it.
+            </p>
+
+
+            <div class="sample-grid">
+
+                <button
+                    type="button"
+                    class="sample-button"
+                    id="benignSample">
+
+                    <div class="sample-icon">
+                        🛡️
+                    </div>
+
+                    <h3>Benign Traffic</h3>
+
+                    <p>
+                        Load a normal network-flow sample and check whether the model identifies
+                        it as legitimate traffic.
+                    </p>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sample-button"
+                    id="dosSample">
+
+                    <div class="sample-icon">
+                        ⚠️
+                    </div>
+
+                    <h3>DoS Attack Traffic</h3>
+
+                    <p>
+                        Load a DoS GoldenEye network-flow sample and check whether the model
+                        detects the attack.
+                    </p>
+
+                </button>
+
+            </div>
+
+
+            <div class="selected-sample">
+
+                <strong>Selected traffic:</strong>
+
+                <span id="selectedSample">
+                    No sample selected
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="check-button"
+                id="checkTraffic">
+
+                🛡️ Check Traffic
+
+            </button>
+
+        </section>
+
+        <section class="card">
+
+            <div class="result-title">
+
+                <h2>Prediction Result</h2>
+
+                <p>
+                    Machine learning classification of the selected network flow.
+                </p>
+
+            </div>
+
+
+            <div id="predictionResult">
+
+                <span id="resultIcon">
+                    🛡️
+                </span>
+
+                <h2 id="resultHeading">
+                    Ready for Analysis
+                </h2>
+
+                <p id="classification">
+                    Select a traffic sample above.
+                </p>
+
+                <p id="confidence"></p>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="info-box">
+
+                    <strong>Model</strong>
+
+                    <span>
+                        Random Forest
+                    </span>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <strong>Detection Type</strong>
+
+                    <span>
+                        Binary Classification
+                    </span>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <strong>Traffic Classes</strong>
+
+                    <span>
+                        Benign / DoS Attack
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="demo.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Network Intrusion Detection System</title>
+
+    <style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #f7fbff;
+    font-family: Arial, sans-serif;
+    color: #173b70;
+}
+.heading {
+    background: linear-gradient(90deg, #244f78, #174e83);
+    height: 82px;
+    padding: 12px 65px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  
+}
+
+
+.security-icon {
+    font-size: 48px;
+    line-height: 1;
+   
+}
+
+.heading h1 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.heading h3 {
+    margin: 5px 0 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+}
+
+
+.form {
+    margin: 12px 18px;
+    padding: 8px 16px 10px;
+    background: white;
+    border: 1px solid #c9e1f5;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(40, 100, 150, 0.08);
+}
+.predict{
+    margin: 12px 18px;
+    padding: 8px 16px 10px;
+    background: white;
+    border: 1px solid #c9e1f5;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(40, 100, 150, 0.08);
+}
+
+h4 {
+    margin: 0;
+    padding: 6px 10px;
+    background: linear-gradient(
+        90deg,
+        #e2f0fc,
+        #edf6fd
+    );
+    color: #123b70;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 2px;
+}
+
+
+.next_row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 8px;
+    padding: 8px 0 10px;
+}
+
+#predictionResult {
+    padding: 12px;
+    border: 1px solid #c9e1f5;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+#predictionResult h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: #173b70;
+}
+#predictionResult p {
+    margin: 4px 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+#classification {
+    font-size: 14px !important;
+}
+.field {
+    min-width: 0;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #173b70;
+}
+
+.required {
+    color: #d62828;
+    font-weight: bold;
+}
+
+
+input[type="number"],
+select {
+    width: 100%;
+    height: 27px;
+    padding: 4px 9px;
+    border: 1px solid #c7dced;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #24466f;
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+    outline: none;
+}
+
+input[type="number"]::placeholder {
+    color: #8ba0b7;
+}
+
+input[type="number"]:focus,
+select:focus {
+    border-color: #4388c7;
+    box-shadow: 0 0 0 2px rgba(67, 136, 199, 0.12);
+}
+
+.end {
+    margin-top: 2px;
+    padding: 0 0 2px;
+    border: none;
+    text-align: center;
+     background: linear-gradient(90deg, #244f78, #2068ab);
+}
+
+.traffic-button {
+    width: 100%;
+    height: 26px;
+    border: none;
+    border-radius: 4px;
+    background: #1768c4;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.traffic-button:hover {
+    background: #1257a5;
+}
+
+.traffic-button:active {
+    transform: scale(0.99);
+}
+
+
+.footer-note {
+    text-align: center;
+    color: #8293a8;
+    font-size: 9px;
+    padding: 5px;
+}
+
+
+@media (max-width: 900px) {
+
+    .heading {
+        padding: 12px 30px;
+    }
+
+    .next_row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .heading {
+        height: auto;
+        padding: 18px;
+    }
+
+    .security-icon {
+        font-size: 38px;
+    }
+
+    .heading h1 {
+        font-size: 18px;
+    }
+
+    .heading h3 {
+        font-size: 11px;
+    }
+
+    .form {
+        margin: 10px;
+        padding: 6px 10px;
+    }
+    .predict{
+        margin: 10px;
+        padding:6px 10px;
+    }
+
+    .next_row {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+   <div class="heading">
+
+    <div class="security-icon">
+        🛡️
+    </div>
+
+    <div>
+        <h1>Network Intrusion Detection System</h1>
+
+        <h3>
+            Enter the network flow details below to check for potential attacks.
+        </h3>
+    </div>
+
+</div>
+
+
+    <form id="networkForm">
+
+
+        <div class="form">
+
+            <h4>1. Connection Basis</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Protocol *:
+                    <br>
+
+                    <select name="Protocol" id="Protocol" required>
+
+                        <option value="">Select Protocol</option>
+                        <option value="6">TCP</option>
+                        <option value="17">UDP</option>
+                        <option value="1">ICMP</option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Flow Duration *:
+                    <br>
+
+                    <input
+                        type="number"
+                        name="Flow_Duration"
+                        id="Flow_Duration"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Total Fwd Packets *:
+                    <br>
+
+                    <input
+                        type="number"
+                        name="Total_Fwd_Packets"
+                        id="Total_Fwd_Packets"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Total Backward Packets *:
+                    <br>
+
+                    <input
+                        type="number"
+                        name="Total_Backward_Packets"
+                        id="Total_Backward_Packets"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <div class="form">
+
+            <h4>2. Packet Length Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Fwd Packets Length Total *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_Packets_Length_Total"
+                        id="Fwd_Packets_Length_Total"
+                        min="0"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Bwd Packets Length Total *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_Packets_Length_Total"
+                        id="Bwd_Packets_Length_Total"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Fwd Packet Length Max *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_Packet_Length_Max"
+                        id="Fwd_Packet_Length_Max"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Fwd Packet Length Min *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_Packet_Length_Min"
+                        id="Fwd_Packet_Length_Min"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Fwd Packet Length Mean *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_Packet_Length_Mean"
+                        id="Fwd_Packet_Length_Mean"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Fwd Packet Length Std *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_Packet_Length_Std"
+                        id="Fwd_Packet_Length_Std"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Bwd Packet Length Max *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_Packet_Length_Max"
+                        id="Bwd_Packet_Length_Max"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Bwd Packet Length Min *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_Packet_Length_Min"
+                        id="Bwd_Packet_Length_Min"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Bwd Packet Length Mean *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_Packet_Length_Mean"
+                        id="Bwd_Packet_Length_Mean"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Bwd Packet Length Std *:
+                    <br>
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_Packet_Length_Std"
+                        id="Bwd_Packet_Length_Std"
+                        required
+                    >
+                </label>
+
+            </div>
+
+        </div>
+   <div class="form">
+
+            <h4>3. Flow Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Flow Bytes/s *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Flow_Bytes_s"
+                        id="Flow_Bytes_s"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Flow Packets/s *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Flow_Packets_s"
+                        id="Flow_Packets_s"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Flow IAT Mean *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Flow_IAT_Mean"
+                        id="Flow_IAT_Mean"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Flow IAT Std *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Flow_IAT_Std"
+                        id="Flow_IAT_Std"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Flow IAT Max *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Flow_IAT_Max"
+                        id="Flow_IAT_Max"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Flow IAT Min *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Flow_IAT_Min"
+                        id="Flow_IAT_Min"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="form">
+
+            <h4>4. Forward / Backward IAT Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Fwd IAT Total *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_IAT_Total"
+                        id="Fwd_IAT_Total"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Fwd IAT Mean *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_IAT_Mean"
+                        id="Fwd_IAT_Mean"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Fwd IAT Std *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_IAT_Std"
+                        id="Fwd_IAT_Std"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Fwd IAT Max *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_IAT_Max"
+                        id="Fwd_IAT_Max"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Fwd IAT Min *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Fwd_IAT_Min"
+                        id="Fwd_IAT_Min"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Bwd IAT Total *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_IAT_Total"
+                        id="Bwd_IAT_Total"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Bwd IAT Mean *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_IAT_Mean"
+                        id="Bwd_IAT_Mean"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Bwd IAT Std *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_IAT_Std"
+                        id="Bwd_IAT_Std"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Bwd IAT Max *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_IAT_Max"
+                        id="Bwd_IAT_Max"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Bwd IAT Min *:
+                    <br>
+
+                    <input
+                        type="number"
+                        step="any"
+                        name="Bwd_IAT_Min"
+                        id="Bwd_IAT_Min"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+        </div>
+
+    <div class="form">
+
+            <h4>5. Packet and Header Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Fwd PSH Flags *:
+                    <br>
+                    <input type="number" name="Fwd_PSH_Flags" id="Fwd_PSH_Flags" required>
+                </label>
+
+
+                <label>
+                    Bwd PSH Flags *:
+                    <br>
+                    <input type="number" name="Bwd_PSH_Flags" id="Bwd_PSH_Flags" required>
+                </label>
+
+
+                <label>
+                    Fwd URG Flags *:
+                    <br>
+                    <input type="number" name="Fwd_URG_Flags" id="Fwd_URG_Flags" required>
+                </label>
+
+
+                <label>
+                    Bwd URG Flags *:
+                    <br>
+                    <input type="number" name="Bwd_URG_Flags" id="Bwd_URG_Flags" required>
+                </label>
+
+
+                <label>
+                    Fwd Header Length *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Header_Length" id="Fwd_Header_Length" required>
+                </label>
+
+
+                <label>
+                    Bwd Header Length *:
+                    <br>
+                    <input type="number" step="any" name="Bwd_Header_Length" id="Bwd_Header_Length" required>
+                </label>
+
+
+                <label>
+                    Fwd Packets/s *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Packets_s" id="Fwd_Packets_s" required>
+                </label>
+
+
+                <label>
+                    Bwd Packets/s *:
+                    <br>
+                    <input type="number" step="any" name="Bwd_Packets_s" id="Bwd_Packets_s" required>
+                </label>
+
+
+                <label>
+                    Packet Length Min *:
+                    <br>
+                    <input type="number" step="any" name="Packet_Length_Min" id="Packet_Length_Min" required>
+                </label>
+
+
+                <label>
+                    Packet Length Max *:
+                    <br>
+                    <input type="number" step="any" name="Packet_Length_Max" id="Packet_Length_Max" required>
+                </label>
+
+
+                <label>
+                    Packet Length Mean *:
+                    <br>
+                    <input type="number" step="any" name="Packet_Length_Mean" id="Packet_Length_Mean" required>
+                </label>
+
+
+                <label>
+                    Packet Length Std *:
+                    <br>
+                    <input type="number" step="any" name="Packet_Length_Std" id="Packet_Length_Std" required>
+                </label>
+
+
+                <label>
+                    Packet Length Variance *:
+                    <br>
+                    <input type="number" step="any" name="Packet_Length_Variance" id="Packet_Length_Variance" required>
+                </label>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- SECTION 6 -->
+        <!-- ================================================= -->
+
+        <div class="form">
+
+            <h4>6. TCP Flag Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    FIN Flag Count *:
+                    <br>
+                    <input type="number" name="FIN_Flag_Count" id="FIN_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    SYN Flag Count *:
+                    <br>
+                    <input type="number" name="SYN_Flag_Count" id="SYN_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    RST Flag Count *:
+                    <br>
+                    <input type="number" name="RST_Flag_Count" id="RST_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    PSH Flag Count *:
+                    <br>
+                    <input type="number" name="PSH_Flag_Count" id="PSH_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    ACK Flag Count *:
+                    <br>
+                    <input type="number" name="ACK_Flag_Count" id="ACK_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    URG Flag Count *:
+                    <br>
+                    <input type="number" name="URG_Flag_Count" id="URG_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    CWE Flag Count *:
+                    <br>
+                    <input type="number" name="CWE_Flag_Count" id="CWE_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    ECE Flag Count *:
+                    <br>
+                    <input type="number" name="ECE_Flag_Count" id="ECE_Flag_Count" required>
+                </label>
+
+
+                <label>
+                    Down Up Ratio *:
+                    <br>
+                    <input type="number" step="any" name="Down_Up_Ratio" id="Down_Up_Ratio" required>
+                </label>
+
+
+                <label>
+                    Avg Packet Size *:
+                    <br>
+                    <input type="number" step="any" name="Avg_Packet_Size" id="Avg_Packet_Size" required>
+                </label>
+
+
+                <label>
+                    Avg Fwd Segment Size *:
+                    <br>
+                    <input type="number" step="any" name="Avg_Fwd_Segment_Size" id="Avg_Fwd_Segment_Size" required>
+                </label>
+
+
+                <label>
+                    Avg Bwd Segment Size *:
+                    <br>
+                    <input type="number" step="any" name="Avg_Bwd_Segment_Size" id="Avg_Bwd_Segment_Size" required>
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="form">
+
+            <h4>7. Bulk and Subflow Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Fwd Avg Bytes Bulk *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Avg_Bytes_Bulk" id="Fwd_Avg_Bytes_Bulk" required>
+                </label>
+
+
+                <label>
+                    Fwd Avg Packets Bulk *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Avg_Packets_Bulk" id="Fwd_Avg_Packets_Bulk" required>
+                </label>
+
+
+                <label>
+                    Fwd Avg Bulk Rate *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Avg_Bulk_Rate" id="Fwd_Avg_Bulk_Rate" required>
+                </label>
+
+
+                <label>
+                    Bwd Avg Bytes Bulk *:
+                    <br>
+                    <input type="number" step="any" name="Bwd_Avg_Bytes_Bulk" id="Bwd_Avg_Bytes_Bulk" required>
+                </label>
+
+
+                <label>
+                    Bwd Avg Packets Bulk *:
+                    <br>
+                    <input type="number" step="any" name="Bwd_Avg_Packets_Bulk" id="Bwd_Avg_Packets_Bulk" required>
+                </label>
+
+
+                <label>
+                    Bwd Avg Bulk Rate *:
+                    <br>
+                    <input type="number" step="any" name="Bwd_Avg_Bulk_Rate" id="Bwd_Avg_Bulk_Rate" required>
+                </label>
+
+
+                <label>
+                    Subflow Fwd Packets *:
+                    <br>
+                    <input type="number" step="any" name="Subflow_Fwd_Packets" id="Subflow_Fwd_Packets" required>
+                </label>
+
+
+                <label>
+                    Subflow Fwd Bytes *:
+                    <br>
+                    <input type="number" step="any" name="Subflow_Fwd_Bytes" id="Subflow_Fwd_Bytes" required>
+                </label>
+
+
+                <label>
+                    Subflow Bwd Packets *:
+                    <br>
+                    <input type="number" step="any" name="Subflow_Bwd_Packets" id="Subflow_Bwd_Packets" required>
+                </label>
+
+
+                <label>
+                    Subflow Bwd Bytes *:
+                    <br>
+                    <input type="number" step="any" name="Subflow_Bwd_Bytes" id="Subflow_Bwd_Bytes" required>
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="form">
+
+            <h4>8. Window, Activity and Idle Information</h4>
+
+            <div class="next_row">
+
+                <label>
+                    Init Fwd Win Bytes *:
+                    <br>
+                    <input type="number" step="any" name="Init_Fwd_Win_Bytes" id="Init_Fwd_Win_Bytes" required>
+                </label>
+
+
+                <label>
+                    Init Bwd Win Bytes *:
+                    <br>
+                    <input type="number" step="any" name="Init_Bwd_Win_Bytes" id="Init_Bwd_Win_Bytes" required>
+                </label>
+
+
+                <label>
+                    Fwd Act Data Packets *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Act_Data_Packets" id="Fwd_Act_Data_Packets" required>
+                </label>
+
+
+                <label>
+                    Fwd Seg Size Min *:
+                    <br>
+                    <input type="number" step="any" name="Fwd_Seg_Size_Min" id="Fwd_Seg_Size_Min" required>
+                </label>
+
+
+                <label>
+                    Active Mean *:
+                    <br>
+                    <input type="number" step="any" name="Active_Mean" id="Active_Mean" required>
+                </label>
+
+
+                <label>
+                    Active Std *:
+                    <br>
+                    <input type="number" step="any" name="Active_Std" id="Active_Std" required>
+                </label>
+
+
+                <label>
+                    Active Max *:
+                    <br>
+                    <input type="number" step="any" name="Active_Max" id="Active_Max" required>
+                </label>
+
+
+                <label>
+                    Active Min *:
+                    <br>
+                    <input type="number" step="any" name="Active_Min" id="Active_Min" required>
+                </label>
+
+
+                <label>
+                    Idle Mean *:
+                    <br>
+                    <input type="number" step="any" name="Idle_Mean" id="Idle_Mean" required>
+                </label>
+
+
+                <label>
+                    Idle Std *:
+                    <br>
+                    <input type="number" step="any" name="Idle_Std" id="Idle_Std" required>
+                </label>
+
+
+                <label>
+                    Idle Max *:
+                    <br>
+                    <input type="number" step="any" name="Idle_Max" id="Idle_Max" required>
+                </label>
+
+
+                <label>
+                    Idle Min *:
+                    <br>
+                    <input type="number" step="any" name="Idle_Min" id="Idle_Min" required>
+                </label>
+
+            </div>
+
+        </div>
+        
+
+        <div class="end">
+
+            <input
+                type="submit"
+                value=" 🛡️Check Traffic"
+            >
+
+        </div>
+        <div class="predict">
+          <div id="predictionResult">
+    <h3>🛡️ Prediction Result</h3>
+
+    <p id="classification"></p>
+
+    <p id="confidence"></p>
+</div>
+</div>
+
+
+    </form>
+   
+<script src="script.js"></script>
+
+</body>
+
+</html>
